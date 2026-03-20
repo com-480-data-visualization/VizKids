@@ -38,6 +38,11 @@ Preliminary exploration of the data can include: the most frequent words across 
 
 These analyses will help determine which aspects of the dataset are most interesting to visualize. For example, one promising direction is to track how the importance of specific topics (e.g., nuclear weapons, terrorism, climate change) evolves across decades and across regions.
 
+For a full walkthrough of the analysis and plots, see [`exploration.ipynb`](exploration.ipynb).
+
+> **To run the notebook:** download the dataset from [Kaggle](https://www.kaggle.com/datasets/unitednations/un-general-debates), 
+> place it in the `data/` directory as `un-general-debates.csv`, and run the cells in order.
+
 ### Related Work
 
 The dataset comes with a paper from Baturo, Dasandi, and Mikhaylov. They introduce the dataset and demonstrate how text analysis methods can extract information about countries’ foreign policy priorities. 
