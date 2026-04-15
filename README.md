@@ -54,3 +54,5 @@ Inspirations for visualization styles come from projects such as: interactive ge
 The originality of this project lies in combining text analysis with interactive visual storytelling, allowing users to explore how global political discourse evolves over time.
 
 
+## Milestone 2
+website: https://com-480-data-visualization.github.io/VizKids/
