@@ -1,4 +1,5 @@
-import { loadWorld, loadStats } from './data/loader.js';
+import { loadWorld, loadStats, loadGlobalStats } from './data/loader.js';
+import { initCharts } from './charts/index.js';
 import { CountryRegistry } from './countries/registry.js';
 import { MapRenderer } from './map/renderer.js';
 import { Magnifier } from './map/magnifier.js';
@@ -12,13 +13,16 @@ import { METRICS } from './utils/scales.js';
 // renderer, magnifier, tooltip, panel and state.
 
 async function init() {
-    const [world, stats] = await Promise.all([loadWorld(), loadStats()]);
+    const [world, stats, globalStats] = await Promise.all([
+        loadWorld(), loadStats(), loadGlobalStats(),
+    ]);
     const registry = new CountryRegistry(world, stats);
 
     setupMap1(registry);
     setupMap2(registry);
+    initCharts(globalStats);
 
-    window.VizKids = { registry };
+    window.VizKids = { registry, globalStats };
 }
 
 function setupMap1(registry) {

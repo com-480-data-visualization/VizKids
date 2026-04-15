@@ -2,6 +2,7 @@
 const WORLD_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json';
 const ISO_MAP_URL = 'data/iso-numeric-to-alpha3.json';
 const STATS_URL = 'data/country_stats.json';
+const GLOBAL_STATS_URL = 'data/global_stats.json';
 
 export async function loadWorld() {
     const [topology, isoMap] = await Promise.all([
@@ -29,6 +30,10 @@ export async function loadStats() {
         console.warn('country_stats.json not found, using empty stats');
         return {};
     }
+}
+
+export async function loadGlobalStats() {
+    return fetchJSON(GLOBAL_STATS_URL);
 }
 
 async function fetchJSON(url) {

@@ -1,45 +1,55 @@
+/* ============================================================================
+   VizKids — unified theme
+   Palette: deep navy surface, amber primary, teal/pink/cyan accents.
+   ============================================================================ */
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-    /* Shared */
-    --ink: #e6e6e6;
-    --muted: #8892a0;
+    --bg:          #0b1020;
+    --surface:     #111836;
+    --surface-2:   rgba(17, 24, 54, 0.78);
+    --border:      rgba(120, 160, 230, 0.18);
+    --border-soft: rgba(120, 160, 230, 0.10);
+    --ink:         #f0f3fa;
+    --muted:       #95a3c4;
 
-    /* Map 1 — classic dark, subtle */
-    --m1-bg: #0f1419;
-    --m1-panel: #1a2028;
-    --m1-border: #2b3440;
-    --m1-accent: #4ea8de;
-    --m1-country: #2b3440;
-    --m1-country-stroke: #0f1419;
-
-    /* Map 2 — vibrant navy, bold accents */
-    --m2-bg: #0b1020;
-    --m2-bg-2: #111836;
-    --m2-panel: rgba(17, 24, 54, 0.92);
-    --m2-border: rgba(120, 160, 230, 0.18);
-    --m2-ink: #f0f3fa;
-    --m2-muted: #95a3c4;
-    --m2-accent: #ffb703;
-    --m2-pink: #ef476f;
-    --m2-country-no-data: #1b2447;
-    --m2-country-stroke: #0b1020;
+    --accent:      #ffb703;   /* primary — amber */
+    --accent-2:    #06d6a0;   /* secondary — teal */
+    --accent-3:    #ef476f;   /* tertiary — pink */
+    --accent-4:    #4ea8de;   /* quaternary — cyan */
+    --accent-5:    #8338ec;   /* violet */
+    --accent-6:    #fb8500;   /* orange */
 }
+
+html, body { height: 100%; }
 
 body {
     font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-    background: var(--m1-bg);
+    background: var(--bg);
     color: var(--ink);
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
 }
 
+/* ============================================================================
+   Header
+   ============================================================================ */
 header {
     padding: 1.5rem 2rem;
-    border-bottom: 1px solid var(--m1-border);
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
 }
-header h1 { font-size: 1.4rem; font-weight: 600; }
-.subtitle { color: var(--muted); font-size: 0.9rem; }
+header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    background: linear-gradient(90deg, var(--accent), var(--accent-3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.subtitle { color: var(--muted); font-size: 0.9rem; margin-top: 0.2rem; }
 
 main {
     max-width: 1600px;
@@ -53,167 +63,122 @@ main {
 .section-head {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
     flex-wrap: wrap;
     gap: 1rem;
     margin-bottom: 0.9rem;
 }
-.section-head h2 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-}
+.section-head h2 { font-size: 1.15rem; font-weight: 600; color: var(--ink); }
+.section-sub { color: var(--muted); font-size: 0.85rem; }
+
 .controls { display: flex; gap: 1rem; align-items: center; font-size: 0.85rem; color: var(--muted); }
 .controls select {
+    background: var(--surface);
     color: var(--ink);
-    border: 1px solid var(--m1-border);
+    border: 1px solid var(--border);
     padding: 0.35rem 0.6rem;
-    border-radius: 5px;
+    border-radius: 6px;
     font: inherit;
     cursor: pointer;
 }
+.controls select:hover { border-color: var(--accent); }
 .toggle { display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; user-select: none; }
+.toggle input { accent-color: var(--accent); }
 
-/* ======================================================================
-   MAP 1 — CLASSIC
-   ====================================================================== */
-.map1 h2 { color: var(--ink); }
-.map1 .controls select { background: var(--m1-panel); }
-.map1 .controls select:hover { border-color: var(--m1-accent); }
-.map1 .toggle input { accent-color: var(--m1-accent); }
+/* ============================================================================
+   MAPS — shared styling, two visual flavors via .map1 / .map2
+   ============================================================================ */
+.map-container {
+    position: relative;
+    background: radial-gradient(ellipse at top, var(--surface) 0%, var(--bg) 70%);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+.map-container svg { width: 100%; height: 100%; display: block; }
 
+.country {
+    stroke: var(--bg);
+    stroke-width: 0.4;
+    cursor: pointer;
+    transition: filter 120ms ease, stroke-width 120ms ease;
+}
+.country.no-data { fill: #1b2447; }
+.country:hover { filter: brightness(1.35); stroke: var(--accent); stroke-width: 1; }
+.country.selected { stroke: var(--accent); stroke-width: 1.5; filter: brightness(1.35); }
+
+.country-dot {
+    cursor: pointer;
+    stroke: rgba(255,255,255,0.7);
+    stroke-width: 0.6;
+}
+.country-dot.no-data { fill: #1b2447; }
+.country-dot:hover { stroke: var(--accent); stroke-width: 1.5; }
+.country-dot.selected { stroke: var(--accent); stroke-width: 2; }
+
+.graticule { fill: none; stroke: rgba(120,160,230,0.08); stroke-width: 0.4; }
+
+.magnifier-border {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 2;
+    filter: drop-shadow(0 0 6px rgba(255,183,3,0.5));
+}
+
+/* ----- Map 1 — classic layout (sidebar panel) ----- */
 .map1-layout {
     display: grid;
     grid-template-columns: 1fr 320px;
     gap: 1rem;
     min-height: 640px;
 }
-.map1 .map-container {
-    position: relative;
-    background: var(--m1-bg);
-    border: 1px solid var(--m1-border);
-    border-radius: 6px;
-    overflow: hidden;
-}
-.map1 svg { width: 100%; height: 100%; display: block; }
-
-.map1 .country {
-    fill: var(--m1-country);
-    stroke: var(--m1-country-stroke);
-    stroke-width: 0.4;
-    cursor: pointer;
-    transition: fill 120ms ease;
-}
-.map1 .country.no-data { fill: var(--m1-panel); }
 .map1 .country:hover,
-.map1 .country.selected { stroke: var(--m1-accent); stroke-width: 1; }
-
-.map1 .country-dot {
-    cursor: pointer;
-    stroke: rgba(255,255,255,0.55);
-    stroke-width: 0.5;
-}
+.map1 .country.selected { stroke: var(--accent-4); }
 .map1 .country-dot:hover,
-.map1 .country-dot.selected { stroke: var(--m1-accent); stroke-width: 1.5; }
-
-.map1 .graticule { fill: none; stroke: #1c2430; stroke-width: 0.3; }
-.map1 .magnifier-border { fill: none; stroke: var(--m1-accent); stroke-width: 1.5; }
-
-.map1 .tooltip {
-    background: rgba(20, 28, 38, 0.95);
-    border: 1px solid var(--m1-border);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+.map1 .country-dot.selected { stroke: var(--accent-4); }
+.map1 .magnifier-border {
+    stroke: var(--accent-4);
+    filter: drop-shadow(0 0 4px rgba(78,168,222,0.5));
 }
-
 .map1 .panel {
-    background: var(--m1-panel);
-    border: 1px solid var(--m1-border);
-    border-radius: 6px;
-    padding: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1rem 1.2rem;
     overflow-y: auto;
 }
-.map1 .panel h2 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.map1 .panel h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+    color: var(--ink);
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+}
+.map1 .panel h2 small { color: var(--muted); font-size: 0.75rem; font-weight: 400; letter-spacing: 0.08em; }
 .map1 .panel .stat-row {
     display: flex;
     justify-content: space-between;
-    padding: 0.3rem 0;
-    border-bottom: 1px solid #222a33;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--border-soft);
     font-size: 0.85rem;
 }
 .map1 .panel .stat-row .label { color: var(--muted); }
-.map1 .panel .words { margin-top: 0.75rem; }
+.map1 .panel .words { margin-top: 0.9rem; }
 .map1 .panel .word {
     display: inline-block;
-    background: #222a33;
-    padding: 0.15rem 0.5rem;
-    margin: 0.15rem;
-    border-radius: 3px;
-    font-size: 0.8rem;
+    background: rgba(78,168,222,0.12);
+    border: 1px solid rgba(78,168,222,0.25);
+    padding: 0.18rem 0.5rem;
+    margin: 0.15rem 0.15rem 0.15rem 0;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    color: var(--ink);
 }
+.map1 .panel .word small { color: var(--muted); margin-left: 0.25rem; }
 
-/* ======================================================================
-   MAP 2 — VIBRANT
-   ====================================================================== */
-.map2 h2 {
-    background: linear-gradient(90deg, var(--m2-accent), var(--m2-pink));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-.map2 .controls select {
-    background: var(--m2-bg-2);
-    border-color: var(--m2-border);
-    color: var(--m2-ink);
-}
-.map2 .controls select:hover { border-color: var(--m2-accent); }
-.map2 .toggle input { accent-color: var(--m2-accent); }
-
-.map2-container {
-    position: relative;
-    height: 75vh;
-    min-height: 600px;
-    background: radial-gradient(ellipse at top, var(--m2-bg-2) 0%, var(--m2-bg) 70%);
-    border-radius: 10px;
-    border: 1px solid var(--m2-border);
-    overflow: hidden;
-}
-.map2 svg { width: 100%; height: 100%; display: block; }
-
-.map2 .country {
-    stroke: var(--m2-country-stroke);
-    stroke-width: 0.4;
-    cursor: pointer;
-    transition: filter 120ms ease, stroke-width 120ms ease;
-}
-.map2 .country.no-data { fill: var(--m2-country-no-data); }
-.map2 .country:hover { filter: brightness(1.35); stroke: var(--m2-accent); stroke-width: 1; }
-.map2 .country.selected { stroke: var(--m2-accent); stroke-width: 1.5; filter: brightness(1.35); }
-
-.map2 .country-dot {
-    cursor: pointer;
-    stroke: rgba(255,255,255,0.7);
-    stroke-width: 0.6;
-}
-.map2 .country-dot.no-data { fill: var(--m2-country-no-data); }
-.map2 .country-dot:hover { stroke: var(--m2-accent); stroke-width: 1.5; }
-.map2 .country-dot.selected { stroke: var(--m2-accent); stroke-width: 2; }
-
-.map2 .graticule { fill: none; stroke: rgba(120,160,230,0.08); stroke-width: 0.4; }
-.map2 .magnifier-border {
-    fill: none;
-    stroke: var(--m2-accent);
-    stroke-width: 2;
-    filter: drop-shadow(0 0 6px rgba(255,183,3,0.5));
-}
-
-.map2 .tooltip {
-    background: var(--m2-panel);
-    border: 1px solid var(--m2-border);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-    color: var(--m2-ink);
-}
-.map2 .tooltip .tt-stat strong { color: var(--m2-accent); }
+/* ----- Map 2 — fullscreen layout (floating panel + legend) ----- */
+.map2-container { height: 75vh; min-height: 600px; }
 
 .map2 .floating-panel {
     position: absolute;
@@ -221,14 +186,14 @@ main {
     bottom: 1.25rem;
     width: 340px;
     max-height: calc(100% - 2.5rem);
-    background: var(--m2-panel);
-    border: 1px solid var(--m2-border);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
     border-radius: 10px;
     padding: 1.1rem 1.2rem;
     backdrop-filter: blur(12px);
     box-shadow: 0 12px 32px rgba(0,0,0,0.55);
     overflow-y: auto;
-    color: var(--m2-ink);
+    color: var(--ink);
     animation: slideUp 220ms ease-out;
 }
 @keyframes slideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
@@ -239,14 +204,14 @@ main {
     right: 0.6rem;
     background: none;
     border: none;
-    color: var(--m2-muted);
+    color: var(--muted);
     font-size: 1.4rem;
     cursor: pointer;
     line-height: 1;
     padding: 0.2rem 0.45rem;
     border-radius: 4px;
 }
-.map2 .panel-close:hover { color: var(--m2-accent); background: rgba(255,255,255,0.05); }
+.map2 .panel-close:hover { color: var(--accent); background: rgba(255,255,255,0.05); }
 
 .map2 .floating-panel h2 {
     font-size: 1.15rem;
@@ -254,29 +219,23 @@ main {
     display: flex;
     align-items: baseline;
     gap: 0.5rem;
-    background: none;
-    -webkit-text-fill-color: initial;
-    color: var(--m2-ink);
+    color: var(--ink);
 }
-.map2 .floating-panel h2 small {
-    color: var(--m2-muted);
-    font-size: 0.75rem;
-    font-weight: 400;
-    letter-spacing: 0.1em;
-}
+.map2 .floating-panel h2 small { color: var(--muted); font-size: 0.75rem; font-weight: 400; letter-spacing: 0.1em; }
+
 .map2 .stat-row {
     display: flex;
     justify-content: space-between;
     padding: 0.4rem 0;
-    border-bottom: 1px solid rgba(120,160,230,0.1);
+    border-bottom: 1px solid var(--border-soft);
     font-size: 0.85rem;
 }
 .map2 .stat-row:last-of-type { border-bottom: none; }
-.map2 .stat-row .label { color: var(--m2-muted); }
-.map2 .stat-row .value { color: var(--m2-ink); font-weight: 500; }
+.map2 .stat-row .label { color: var(--muted); }
+.map2 .stat-row .value { color: var(--ink); font-weight: 500; }
 
 .map2 .words-section { margin-top: 0.9rem; }
-.map2 .words-title { color: var(--m2-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+.map2 .words-title { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
 .map2 .word {
     display: inline-block;
     background: linear-gradient(135deg, rgba(255,183,3,0.15), rgba(239,71,111,0.15));
@@ -285,38 +244,42 @@ main {
     margin: 0.15rem 0.15rem 0.15rem 0;
     border-radius: 4px;
     font-size: 0.78rem;
-    color: var(--m2-ink);
+    color: var(--ink);
 }
-.map2 .word small { color: var(--m2-muted); margin-left: 0.3rem; }
+.map2 .word small { color: var(--muted); margin-left: 0.3rem; }
 
 .map2 .legend {
     position: absolute;
     right: 1.25rem;
     bottom: 1.25rem;
-    background: var(--m2-panel);
-    border: 1px solid var(--m2-border);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
     border-radius: 8px;
     padding: 0.7rem 0.9rem;
     backdrop-filter: blur(10px);
     font-size: 0.75rem;
-    color: var(--m2-muted);
+    color: var(--muted);
     min-width: 200px;
 }
-.map2 .legend-title { color: var(--m2-ink); font-weight: 600; margin-bottom: 0.4rem; font-size: 0.8rem; }
+.map2 .legend-title { color: var(--ink); font-weight: 600; margin-bottom: 0.4rem; font-size: 0.8rem; }
 .map2 .legend-bar { height: 10px; border-radius: 3px; margin-bottom: 0.25rem; }
 .map2 .legend-ticks { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
 
-/* ======================================================================
-   SHARED TOOLTIP STRUCTURE
-   ====================================================================== */
+/* Shared map tooltip */
 .tooltip {
     position: absolute;
     pointer-events: none;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
     padding: 0.55rem 0.8rem;
     border-radius: 6px;
     font-size: 0.85rem;
     transform: translate(14px, 14px);
     min-width: 170px;
+    color: var(--ink);
+    z-index: 5;
 }
 .tooltip .tt-name { font-weight: 600; margin-bottom: 0.3rem; }
 .tooltip .tt-stat {
@@ -325,4 +288,57 @@ main {
     display: flex;
     justify-content: space-between;
     gap: 0.8rem;
+}
+.tooltip .tt-stat strong { color: var(--accent); font-weight: 600; }
+
+/* ============================================================================
+   CHARTS
+   ============================================================================ */
+.charts-section .section-head { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+@media (max-width: 900px) {
+    .charts-grid { grid-template-columns: 1fr; }
+}
+
+.chart-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1rem 1.2rem 1.2rem;
+}
+.chart-card-wide { grid-column: 1 / -1; }
+
+.chart-card h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+}
+.chart-hint {
+    color: var(--muted);
+    font-size: 0.78rem;
+    margin-bottom: 0.75rem;
+}
+.chart { width: 100%; }
+
+/* Chart-specific tooltip (separate from map tooltip; positioned to document) */
+.chart-tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: var(--ink);
+    z-index: 1000;
+    min-width: 130px;
 }
