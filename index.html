@@ -3,16 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VizKids</title>
+    <title>VizKids — UN Speeches</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header>
         <h1>VizKids</h1>
+        <p class="subtitle">UN General Debate speeches, 1970–2015</p>
     </header>
+
     <main>
-        <section id="visualization"></section>
+        <section id="controls">
+            <label for="metric-select">Color by:</label>
+            <select id="metric-select"></select>
+            <label class="toggle">
+                <input type="checkbox" id="magnifier-toggle" checked>
+                Magnifier
+            </label>
+        </section>
+
+        <section id="map-container">
+            <svg id="map" role="img" aria-label="World map"></svg>
+            <div id="tooltip" class="tooltip" hidden></div>
+        </section>
+
+        <aside id="panel" class="panel" hidden></aside>
     </main>
-    <script src="js/main.js"></script>
+
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
