@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VizKids — Fullscreen Map</title>
+    <link rel="stylesheet" href="css/style2.css">
+</head>
+<body>
+    <div id="app">
+        <header id="topbar">
+            <div class="brand">
+                <h1>VizKids</h1>
+                <span class="subtitle">UN General Debate · 1970–2015</span>
+                <nav class="page-nav">
+                    <a href="index.html">Map 1 · Classic</a>
+                    <a href="map2.html" class="active">Map 2 · Fullscreen</a>
+                </nav>
+            </div>
+            <div id="controls">
+                <label for="metric-select">Color by</label>
+                <select id="metric-select"></select>
+                <label class="toggle">
+                    <input type="checkbox" id="magnifier-toggle" checked>
+                    <span>Magnifier</span>
+                </label>
+            </div>
+        </header>
+
+        <section id="map-container">
+            <svg id="map" role="img" aria-label="World map"></svg>
+            <div id="tooltip" class="tooltip" hidden></div>
+
+            <aside id="panel" class="panel" hidden>
+                <button class="panel-close" aria-label="Close">×</button>
+                <div class="panel-body"></div>
+            </aside>
+
+            <div id="legend" class="legend"></div>
+        </section>
+    </div>
+
+    <script type="module" src="js/main2.js"></script>
+</body>
+</html>
