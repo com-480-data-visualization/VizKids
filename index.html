@@ -10,28 +10,54 @@
     <header>
         <h1>VizKids</h1>
         <p class="subtitle">UN General Debate speeches, 1970–2015</p>
-        <nav class="page-nav">
-            <a href="index.html" class="active">Map 1 · Classic</a>
-            <a href="map2.html">Map 2 · Fullscreen</a>
-        </nav>
     </header>
 
     <main>
-        <section id="controls">
-            <label for="metric-select">Color by:</label>
-            <select id="metric-select"></select>
-            <label class="toggle">
-                <input type="checkbox" id="magnifier-toggle" checked>
-                Magnifier
-            </label>
+        <!-- ========== Map 1 — Classic ========== -->
+        <section class="map-section map1">
+            <div class="section-head">
+                <h2>Map 1 · Classic</h2>
+                <div class="controls">
+                    <label for="m1-metric">Color by:</label>
+                    <select id="m1-metric"></select>
+                    <label class="toggle">
+                        <input type="checkbox" id="m1-magnifier" checked>
+                        Magnifier
+                    </label>
+                </div>
+            </div>
+            <div class="map1-layout">
+                <div class="map-container">
+                    <svg id="m1-svg" role="img" aria-label="World map — classic"></svg>
+                    <div id="m1-tooltip" class="tooltip" hidden></div>
+                </div>
+                <aside id="m1-panel" class="panel" hidden></aside>
+            </div>
         </section>
 
-        <section id="map-container">
-            <svg id="map" role="img" aria-label="World map"></svg>
-            <div id="tooltip" class="tooltip" hidden></div>
+        <!-- ========== Map 2 — Fullscreen ========== -->
+        <section class="map-section map2">
+            <div class="section-head">
+                <h2>Map 2 · Vibrant</h2>
+                <div class="controls">
+                    <label for="m2-metric">Color by</label>
+                    <select id="m2-metric"></select>
+                    <label class="toggle">
+                        <input type="checkbox" id="m2-magnifier" checked>
+                        <span>Magnifier</span>
+                    </label>
+                </div>
+            </div>
+            <div class="map-container map2-container">
+                <svg id="m2-svg" role="img" aria-label="World map — vibrant"></svg>
+                <div id="m2-tooltip" class="tooltip" hidden></div>
+                <aside id="m2-panel" class="panel floating-panel" hidden>
+                    <button class="panel-close" aria-label="Close">×</button>
+                    <div class="panel-body"></div>
+                </aside>
+                <div id="m2-legend" class="legend"></div>
+            </div>
         </section>
-
-        <aside id="panel" class="panel" hidden></aside>
     </main>
 
     <script type="module" src="js/main.js"></script>

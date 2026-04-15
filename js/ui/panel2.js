@@ -1,6 +1,6 @@
-import { METRICS, formatMetric } from '../utils/scales2.js';
+import { METRICS, formatMetric } from '../utils/scales.js';
 
-// Floating bottom-left panel with a close button.
+// Floating bottom-left panel variant with a close button.
 export class Panel {
     constructor(el, { onClose } = {}) {
         this.el = el;
@@ -14,7 +14,7 @@ export class Panel {
         if (!country.hasData()) {
             this.body.innerHTML = `
                 <h2>${escapeHtml(country.name)} <small>${country.iso3}</small></h2>
-                <p style="color:var(--muted)">No speech data available for this country.</p>`;
+                <p style="color:var(--muted)">No speech data available.</p>`;
             this.el.hidden = false;
             return;
         }

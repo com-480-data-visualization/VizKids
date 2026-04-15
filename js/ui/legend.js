@@ -1,7 +1,6 @@
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
-import { METRIC_BY_KEY, formatMetric } from '../utils/scales2.js';
+import { METRIC_BY_KEY, formatMetric } from '../utils/scales.js';
 
-// Small color-scale legend for map2.
 export class Legend {
     constructor(el) { this.el = el; }
 
