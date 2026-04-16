@@ -9,8 +9,6 @@ import { Panel as FloatingPanel } from './ui/panel2.js';
 import { Legend } from './ui/legend.js';
 import { METRICS } from './utils/scales.js';
 
-// Both maps share loaded data, registry, and metric list; each gets its own
-// renderer, magnifier, tooltip, panel and state.
 
 async function init() {
     const [world, stats, globalStats] = await Promise.all([
@@ -26,7 +24,7 @@ async function init() {
 }
 
 function setupMap1(registry) {
-    const state = { metric: 'avg_word_count' };
+    const state = { metric: 'avg_word_count', year: 2015 }; 
     const tooltip = new Tooltip(document.getElementById('m1-tooltip'));
     const panel = new ClassicPanel(document.getElementById('m1-panel'));
 
@@ -37,11 +35,11 @@ function setupMap1(registry) {
         idPrefix: 'm1',
         onHover: (c, event) => tooltip.show(c, event, state.metric),
         onLeave: () => tooltip.hide(),
-        onSelect: (c) => panel.show(c),
+        onSelect: (c) => panel.show(c, state.year), 
     });
     renderer.render();
 
-    const magnifier = new Magnifier(renderer, { idPrefix: 'm1', radius: 90, scale: 3 });
+    const magnifier = new Magnifier(renderer, { idPrefix: 'm1', radius: 150, scale: 4 });
     magnifier.setEnabled(true);
 
     populateMetricSelect('m1-metric', state.metric, (val) => {
@@ -50,6 +48,18 @@ function setupMap1(registry) {
     });
     document.getElementById('m1-magnifier').addEventListener('change', (e) => {
         magnifier.setEnabled(e.target.checked);
+    });
+
+    const timeline = document.getElementById('m1-timeline');
+    const yearLabel = document.getElementById('m1-year-val');
+    
+    timeline.addEventListener('input', (e) => {
+        state.year = parseInt(e.target.value, 10);
+        yearLabel.textContent = state.year; 
+        if (renderer._selected) {
+            panel.show(renderer._selected, state.year);
+        }
+        
     });
 }
 
