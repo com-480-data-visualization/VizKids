@@ -63,6 +63,11 @@ async function setupMap1(registry) {
         value: state.year,
         onChange: async (year) => {
             state.year = year;
+            const set = await loadSpeechesForYear(year);
+            
+            registry.markSpeechYear(set);
+            renderer.setSpeechMode(true);
+
             if (renderer._selected) {
                 const c = renderer._selected;
                 if (!c.hasSpeechThisYear) {
@@ -71,46 +76,43 @@ async function setupMap1(registry) {
                     panel.show(c, year);
                 }
             }
-            const set = await loadSpeechesForYear(year);
-            registry.markSpeechYear(set);
-            renderer.setSpeechMode(true);
         },
     });
-}
+    }
 
-function setupMap2(registry) {
-    const state = { metric: 'avg_word_count' };
-    const tooltip = new Tooltip(document.getElementById('m2-tooltip'));
-    const legend = new Legend(document.getElementById('m2-legend'));
+    function setupMap2(registry) {
+        const state = { metric: 'avg_word_count' };
+        const tooltip = new Tooltip(document.getElementById('m2-tooltip'));
+        const legend = new Legend(document.getElementById('m2-legend'));
 
-    let renderer;
-    const panel = new FloatingPanel(document.getElementById('m2-panel'), {
-        onClose: () => renderer && renderer.clearSelection(),
-    });
+        let renderer;
+        const panel = new FloatingPanel(document.getElementById('m2-panel'), {
+            onClose: () => renderer && renderer.clearSelection(),
+        });
 
-    renderer = new MapRenderer({
-        svg: document.getElementById('m2-svg'),
-        registry,
-        metric: state.metric,
-        idPrefix: 'm2',
-        onHover: (c, event) => tooltip.show(c, event, state.metric),
-        onLeave: () => tooltip.hide(),
-        onSelect: (c) => panel.show(c),
-    });
-    renderer.render();
-    legend.render(state.metric, renderer.colorExtent());
+        renderer = new MapRenderer({
+            svg: document.getElementById('m2-svg'),
+            registry,
+            metric: state.metric,
+            idPrefix: 'm2',
+            onHover: (c, event) => tooltip.show(c, event, state.metric),
+            onLeave: () => tooltip.hide(),
+            onSelect: (c) => panel.show(c),
+        });
+        renderer.render();
+        legend.render(state.metric, renderer.colorExtent());
 
-    const magnifier = new Magnifier(renderer, { idPrefix: 'm2', radius: 110, scale: 3.2 });
-    magnifier.setEnabled(true);
+        const magnifier = new Magnifier(renderer, { idPrefix: 'm2', radius: 110, scale: 3.2 });
+        magnifier.setEnabled(true);
 
-    populateMetricSelect('m2-metric', state.metric, (val) => {
-        state.metric = val;
-        renderer.setMetric(val);
-        legend.render(val, renderer.colorExtent());
-    });
-    document.getElementById('m2-magnifier').addEventListener('change', (e) => {
-        magnifier.setEnabled(e.target.checked);
-    });
+        populateMetricSelect('m2-metric', state.metric, (val) => {
+            state.metric = val;
+            renderer.setMetric(val);
+            legend.render(val, renderer.colorExtent());
+        });
+        document.getElementById('m2-magnifier').addEventListener('change', (e) => {
+            magnifier.setEnabled(e.target.checked);
+        });
 }
 
 function populateMetricSelect(id, current, onChange) {

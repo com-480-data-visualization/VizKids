@@ -43,7 +43,7 @@ export async function loadStats() {
         console.warn('country_stats.json not found, using empty stats');
         return {};
     }
-}
+}  
 
 export async function loadGlobalStats() {
     return fetchJSON(GLOBAL_STATS_URL);
@@ -57,25 +57,12 @@ async function fetchJSON(url) {
 
 let _csvCache = null;
 export async function loadSpeechesForYear(year) {
-    if (!_csvCache) {
-        const res = await fetch('data/un-general-debates.csv');
-        if (!res.ok) throw new Error('Cannot load CSV');
-        const text = await res.text();
-        const lines = text.split('\n');
-        const header = lines[0].split(',');
-        const yearIdx = header.indexOf('year');
-        const countryIdx = header.indexOf('country');
-        _csvCache = [];
-        for (let i = 1; i < lines.length; i++) {
-            const cols = lines[i].split(',');
-            if (cols.length < 2) continue;
-            _csvCache.push({ year: parseInt(cols[yearIdx], 10), country: cols[countryIdx] });
-        }
-    }
+    const stats = await loadStats();
+    
     const set = new Set();
-    for (const row of _csvCache) {
-        if (row.year === year) {
-            const iso = row.country.trim().toUpperCase();
+    
+    for (const [iso, data] of Object.entries(stats)) {
+        if (data.years && data.years.includes(year)) {
             const modern = SUCCESSOR_MAP[iso] || iso;
             set.add(modern);
         }
