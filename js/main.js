@@ -18,7 +18,7 @@ async function init() {
     ]);
     const registry = new CountryRegistry(world, stats);
 
-    setupMap1(registry);
+    // setupMap1(registry);  // Map 1 disabled
     setupMap2(registry);
     initCharts(globalStats);
 
@@ -100,7 +100,9 @@ function populateMetricSelect(id, current, onChange) {
     sel.addEventListener('change', (e) => onChange(e.target.value));
 }
 
-init().catch((err) => {
+// Ensure layout is complete before measuring SVG dimensions.
+const ready = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+ready().then(init).catch((err) => {
     console.error(err);
     document.body.insertAdjacentHTML(
         'beforeend',
