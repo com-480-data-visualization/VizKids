@@ -1,10 +1,5 @@
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 
-// Circular magnifier that follows the cursor.
-// The magnifier layer uses pointer-events:none so clicks fall through to the
-// base country paths. The transform keeps the cursor point fixed, so the
-// country under the cursor visually is the same one that receives the event.
-
 const DEFAULT_RADIUS = 100;
 const DEFAULT_SCALE = 3;
 
@@ -16,6 +11,8 @@ export class Magnifier {
         this.scale = scale;
         this.enabled = false;
 
+        renderer._magnifier = this;
+
         const clipId = `magnifier-clip-${idPrefix}`;
         this.clip = this.svg.append('defs').append('clipPath').attr('id', clipId);
         this.clipCircle = this.clip.append('circle').attr('r', radius);
@@ -26,16 +23,8 @@ export class Magnifier {
             .style('display', 'none')
             .style('pointer-events', 'none');
 
-        // Strip duplicate IDs from the clone so only originals stay addressable.
-        const cloneStripIds = (node) => {
-            const clone = node.cloneNode(true);
-            clone.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
-            return clone;
-        };
         this.content = this.g.append('g').attr('class', 'magnifier-content');
-        this.content.append(() => cloneStripIds(renderer.gGraticule.node()));
-        this.content.append(() => cloneStripIds(renderer.gCountries.node()));
-        this.content.append(() => cloneStripIds(renderer.gDots.node()));
+        this._buildClone();
 
         this.border = this.svg.append('circle')
             .attr('class', 'magnifier-border')
@@ -49,6 +38,25 @@ export class Magnifier {
         this.svg.node().addEventListener('mouseleave', this._onLeave);
     }
 
+    _stripIds(node) {
+        const clone = node.cloneNode(true);
+        clone.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
+        return clone;
+    }
+
+    _buildClone() {
+        this.content.selectAll('*').remove();
+        this.content.append(() => this._stripIds(this.renderer.gGraticule.node()));
+        this.content.append(() => this._stripIds(this.renderer.gCountries.node()));
+        this.content.append(() => this._stripIds(this.renderer.gDots.node()));
+    }
+
+    refreshContent() {
+        const currentTransform = this.content.attr('transform');
+        this._buildClone();
+        if (currentTransform) this.content.attr('transform', currentTransform);
+    }
+
     setEnabled(on) {
         this.enabled = on;
         if (!on) this._hide();
@@ -59,7 +67,6 @@ export class Magnifier {
         const [x, y] = d3.pointer(event, this.svg.node());
         this.clipCircle.attr('cx', x).attr('cy', y);
         this.border.attr('cx', x).attr('cy', y).style('display', null);
-        // p' = (p - c) * k + c  ==  translate(c) scale(k) translate(-c)
         this.content.attr('transform', `translate(${x},${y}) scale(${this.scale}) translate(${-x},${-y})`);
         this.g.style('display', null);
     }

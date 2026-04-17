@@ -1,5 +1,4 @@
-// Single source of truth for country data.
-// Joins geometry (GeoJSON feature) + aggregate stats keyed by ISO3.
+import { SUCCESSOR_MAP } from '../data/loader.js';
 
 export class Country {
     constructor(iso3, feature, stats) {
@@ -7,6 +6,7 @@ export class Country {
         this.feature = feature;
         this.stats = stats || null;
         this.name = (stats && stats.name) || (feature && feature.properties && feature.properties.name) || iso3;
+        this.hasSpeechThisYear = false;
     }
     hasData() { return this.stats !== null; }
     get(metric) { return this.stats ? this.stats[metric] : null; }
@@ -23,7 +23,6 @@ export class CountryRegistry {
             if (!iso3) continue;
             this._byIso.set(iso3, new Country(iso3, feature, stats[iso3]));
         }
-        // Countries in stats that have no matching geometry (edge case) — skip silently.
     }
 
     get(iso3) { return this._byIso.get(iso3) || null; }
@@ -33,7 +32,12 @@ export class CountryRegistry {
     onSelect(cb) { this._listeners.add(cb); return () => this._listeners.delete(cb); }
     emitSelect(country) { this._listeners.forEach((cb) => cb(country)); }
 
-    // Helper: range of a metric across countries that have data.
+    markSpeechYear(speechSet) {
+        for (const c of this._byIso.values()) {
+            c.hasSpeechThisYear = speechSet.has(c.iso3);
+        }
+    }
+
     metricExtent(metric) {
         let min = Infinity, max = -Infinity;
         for (const c of this._byIso.values()) {

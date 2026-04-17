@@ -2,19 +2,21 @@ import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 import { buildProjection, buildPath } from './projection.js';
 import { colorScaleFor } from '../utils/scales.js';
 
-// Countries whose projected area is below this threshold (px²) get a
-// clickable dot marker at their centroid — without this, small countries
-// are unreachable unless the magnifier is on.
 const SMALL_COUNTRY_AREA_PX = 18;
 const DOT_RADIUS = 4.5;
 
+// Speech-mode colors
+const SPEECH_COLOR     = '#2563eb'; // vibrant blue — gave a speech this year
+const NO_SPEECH_COLOR  = '#1b2447'; // no speech
+
 export class MapRenderer {
-    constructor({ svg, registry, metric, idPrefix = 'm', onHover, onLeave, onSelect }) {
+    constructor({ svg, registry, metric, idPrefix = 'm', speechMode = false, onHover, onLeave, onSelect }) {
         this.svgEl = svg;
         this.svg = d3.select(svg);
         this.registry = registry;
         this.metric = metric;
         this.idPrefix = idPrefix;
+        this.speechMode = speechMode;
         this.onHover = onHover;
         this.onLeave = onLeave;
         this.onSelect = onSelect;
@@ -26,7 +28,6 @@ export class MapRenderer {
         this.projection = buildProjection(this.width, this.height, registry.world.land);
         this.path = buildPath(this.projection);
 
-        // Layer groups — exposed so the magnifier can clone them.
         this.gBase = this.svg.append('g').attr('class', 'layer-base');
         this.gGraticule = this.gBase.append('g').attr('class', 'layer-graticule');
         this.gCountries = this.gBase.append('g').attr('class', 'layer-countries');
@@ -34,6 +35,7 @@ export class MapRenderer {
         this.gMagnifier = this.svg.append('g').attr('class', 'layer-magnifier');
 
         this._selected = null;
+        this._magnifier = null; // set by Magnifier after construction
 
         window.addEventListener('resize', () => this._handleResize());
     }
@@ -43,13 +45,12 @@ export class MapRenderer {
         this.gGraticule.selectAll('path').data([graticule]).join('path')
             .attr('class', 'graticule').attr('d', this.path);
 
-        const pid = (c) => `${this.idPrefix}-c-${c.iso3}`;
         const self = this;
         this.gCountries.selectAll('path.country')
             .data(this.registry.all(), (c) => c.iso3)
             .join('path')
             .attr('class', (c) => 'country' + (c.hasData() ? '' : ' no-data'))
-            .attr('id', pid)
+            .attr('id', (c) => `${this.idPrefix}-c-${c.iso3}`)
             .attr('d', (c) => this.path(c.feature))
             .on('mousemove', (event, c) => self.onHover && self.onHover(c, event))
             .on('mouseleave', () => self.onLeave && self.onLeave())
@@ -64,13 +65,12 @@ export class MapRenderer {
             const area = this.path.area(c.feature);
             return area > 0 && area < SMALL_COUNTRY_AREA_PX;
         });
-        const did = (c) => `${this.idPrefix}-d-${c.iso3}`;
         const self = this;
         this.gDots.selectAll('circle.country-dot')
             .data(small, (c) => c.iso3)
             .join('circle')
             .attr('class', (c) => 'country-dot' + (c.hasData() ? '' : ' no-data'))
-            .attr('id', did)
+            .attr('id', (c) => `${this.idPrefix}-d-${c.iso3}`)
             .attr('r', DOT_RADIUS)
             .attr('cx', (c) => this.path.centroid(c.feature)[0])
             .attr('cy', (c) => this.path.centroid(c.feature)[1])
@@ -79,21 +79,41 @@ export class MapRenderer {
             .on('click', (event, c) => self._select(c));
     }
 
-    setMetric(metric) { this.metric = metric; this._applyColors(); }
-
-    _applyColors() {
-        const [min, max] = this.registry.metricExtent(this.metric);
-        const scale = colorScaleFor(this.metric, [min, max]);
-        const fill = (c) => {
-            const v = c.get(this.metric);
-            return (typeof v === 'number') ? scale(v) : null;
-        };
-        this.gCountries.selectAll('path.country').attr('fill', fill);
-        this.gDots.selectAll('circle.country-dot').attr('fill', fill);
-        this._currentExtent = [min, max];
+    setMetric(metric) {
+        this.metric = metric;
+        this._applyColors();
+        this.refreshMagnifier();
     }
 
-    colorExtent() { return this._currentExtent; }
+    setSpeechMode(on) {
+        this.speechMode = on;
+        this._applyColors();
+        this.refreshMagnifier();
+    }
+
+    _applyColors() {
+        let fill;
+        if (this.speechMode) {
+            fill = (c) => c.hasSpeechThisYear ? SPEECH_COLOR : NO_SPEECH_COLOR;
+        } else {
+            const [min, max] = this.registry.metricExtent(this.metric);
+            const scale = colorScaleFor(this.metric, [min, max]);
+            this._currentExtent = [min, max];
+            fill = (c) => {
+                const v = c.get(this.metric);
+                return (typeof v === 'number') ? scale(v) : null;
+            };
+        }
+        this.gCountries.selectAll('path.country').attr('fill', fill);
+        this.gDots.selectAll('circle.country-dot').attr('fill', fill);
+    }
+
+    refreshMagnifier() {
+        if (!this._magnifier) return;
+        this._magnifier.refreshContent();
+    }
+
+    colorExtent() { return this._currentExtent || [0, 1]; }
 
     _select(country) {
         const prev = this._selected;
@@ -124,5 +144,6 @@ export class MapRenderer {
         this.gGraticule.selectAll('path').attr('d', this.path);
         this.gCountries.selectAll('path.country').attr('d', (c) => this.path(c.feature));
         this._renderDots();
+        this.refreshMagnifier();
     }
 }

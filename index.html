@@ -16,13 +16,8 @@
         <!-- ========== Map 1 — Classic ========== -->
         <section class="map-section map1">
             <div class="section-head">
-                <h2>Map 1 · Classic</h2>
+                <h2>Information Map</h2>
                 <div class="controls">
-                    <label for="m1-timeline">Year: <span id="m1-year-val" style="font-weight: bold; color: var(--accent);">2015</span></label>
-                    <input type="range" id="m1-timeline" min="1970" max="2015" value="2015" step="1">
-
-                    <label for="m1-metric">Color by:</label>
-                    <select id="m1-metric"></select>
                     <label class="toggle">
                         <input type="checkbox" id="m1-magnifier" checked>
                         Magnifier
@@ -30,9 +25,12 @@
                 </div>
             </div>
             <div class="map1-layout">
-                <div class="map-container">
-                    <svg id="m1-svg" role="img" aria-label="World map — classic"></svg>
-                    <div id="m1-tooltip" class="tooltip" hidden></div>
+                <div class="map-col">
+                    <div class="map-container">
+                        <svg id="m1-svg" role="img" aria-label="World map — classic"></svg>
+                        <div id="m1-tooltip" class="tooltip" hidden></div>
+                    </div>
+                    <div id="m1-timeline-bar" class="timeline-bar"></div>
                 </div>
                 <aside id="m1-panel" class="panel" hidden></aside>
             </div>
