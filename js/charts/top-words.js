@@ -6,9 +6,9 @@ export function render(container, rawData, { top = 20 } = {}) {
     const el = typeof container === 'string' ? document.querySelector(container) : container;
     const data = rawData.slice(0, top).map(([word, count]) => ({ word, count }));
 
-    const margin = { top: 10, right: 50, bottom: 20, left: 80 };
+    const margin = { top: 10, right: 60, bottom: 20, left: 100 };
     const width = el.clientWidth || 480;
-    const rowH = 20;
+    const rowH = 28;
     const height = margin.top + margin.bottom + data.length * rowH;
     const iw = width - margin.left - margin.right;
     const ih = height - margin.top - margin.bottom;
@@ -47,7 +47,7 @@ export function render(container, rawData, { top = 20 } = {}) {
         .attr('y', (d) => y(d.word) + y.bandwidth() / 2)
         .attr('dy', '0.35em')
         .attr('fill', COLORS.muted)
-        .style('font-size', '11px')
+        .style('font-size', '12px')
         .style('font-variant-numeric', 'tabular-nums')
         .text((d) => d.count.toLocaleString());
 }

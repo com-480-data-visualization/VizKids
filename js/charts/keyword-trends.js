@@ -2,12 +2,15 @@ import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 import { COLORS, CATEGORICAL, MARGIN, styleAxis } from './palette.js';
 import { chartTooltip } from './tooltip.js';
 
-export function render(container, data) {
+export function render(container, data, options = {}) {
     const el = typeof container === 'string' ? document.querySelector(container) : container;
+    const { events = [] } = options;
     const width = el.clientWidth || 480;
-    const height = 300;
+    const height = 420;
     const iw = width - MARGIN.left - MARGIN.right;
     const ih = height - MARGIN.top - MARGIN.bottom - 30; // reserve for legend
+    // Quick lookup year -> event for the hover handler below.
+    const eventsByYear = new Map(events.map((e) => [e.year, e]));
 
     el.innerHTML = '';
     const svg = d3.select(el).append('svg')
@@ -40,6 +43,22 @@ export function render(container, data) {
         .attr('fill', COLORS.muted).style('font-size', '10px')
         .text('Mentions per 1000 words');
 
+    // Event markers — dashed vertical lines, drawn BEHIND the data lines so the
+    // colored series stay visually dominant. Markers (small white circles
+    // sitting on the x-axis) are added after the data lines, so they remain
+    // visible and hoverable.
+    if (events.length) {
+        const evG = g.append('g').attr('class', 'events-layer');
+        evG.selectAll('line.event-line').data(events).enter().append('line')
+            .attr('class', 'event-line')
+            .attr('x1', (e) => x(e.year)).attr('x2', (e) => x(e.year))
+            .attr('y1', 0).attr('y2', ih)
+            .attr('stroke', 'rgba(240, 243, 250, 0.22)')
+            .attr('stroke-width', 1)
+            .attr('stroke-dasharray', '3,4')
+            .style('pointer-events', 'none');
+    }
+
     // Lines
     const line = d3.line().x((p) => x(p.year)).y((p) => y(p.rate)).curve(d3.curveMonotoneX);
     g.selectAll('path.series').data(data).enter().append('path')
@@ -49,6 +68,31 @@ export function render(container, data) {
         .attr('stroke-width', 1.8)
         .attr('d', (d) => line(d.series))
         .attr('opacity', 0.9);
+
+    // Event dots at the bottom of the chart, drawn after the data series so
+    // they sit on top. They're hoverable for the full event description.
+    if (events.length) {
+        const evDots = g.append('g').attr('class', 'events-dots');
+        evDots.selectAll('circle.event-dot').data(events).enter().append('circle')
+            .attr('class', 'event-dot')
+            .attr('cx', (e) => x(e.year))
+            .attr('cy', ih)
+            .attr('r', 5)
+            .attr('fill', COLORS.ink)
+            .attr('stroke', COLORS.bg)
+            .attr('stroke-width', 2)
+            .style('cursor', 'help')
+            .on('mouseenter', (event, e) => {
+                chartTooltip.show(
+                    `<div style="color:${COLORS.amber};font-weight:700;letter-spacing:0.04em;text-transform:uppercase;font-size:0.7rem;margin-bottom:4px">Event · ${e.year}</div>`
+                    + `<div style="font-weight:600;color:${COLORS.ink}">${escapeHtml(e.label)}</div>`
+                    + `<div style="color:${COLORS.muted};margin-top:4px;max-width:240px">${escapeHtml(e.description || '')}</div>`,
+                    event,
+                );
+            })
+            .on('mousemove', (event) => chartTooltip.move(event))
+            .on('mouseleave', () => chartTooltip.hide());
+    }
 
     // Legend at bottom
     const legend = svg.append('g').attr('transform', `translate(${MARGIN.left},${height - 18})`);
@@ -83,6 +127,14 @@ export function render(container, data) {
                 const v = kw.series[i].rate;
                 return `<div style="display:flex;justify-content:space-between;gap:10px"><span style="color:${color(kw.keyword)}">&#9632;</span><span>${kw.keyword}</span><b>${v.toFixed(2)}</b></div>`;
             }).join('');
-            chartTooltip.show(`<b>${year}</b>${rows}`, event);
+            const evt = eventsByYear.get(year);
+            const evtRow = evt
+                ? `<div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(120,160,230,0.18);color:${COLORS.amber};font-weight:600">⚑ ${escapeHtml(evt.label)}</div>`
+                : '';
+            chartTooltip.show(`<b>${year}</b>${rows}${evtRow}`, event);
         });
+}
+
+function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }

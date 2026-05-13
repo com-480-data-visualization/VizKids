@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VizKids — How the World Speaks</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/final.css">
+</head>
+<body class="final">
+    <nav class="topnav">
+        <a href="index.html" class="topnav-back">← Milestone 2 version</a>
+        <span class="topnav-title">VizKids</span>
+        <span class="topnav-meta">Milestone 3 · in progress</span>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-inner">
+            <span class="hero-eyebrow">UN General Debate · 1970 – 2015</span>
+            <h1>How the World Speaks</h1>
+            <p class="hero-sub">
+                Once a year, every country in the United Nations gives a speech to the General Assembly.
+                Between 1970 and 2015 that produced 7,507 speeches — about 20 million words.
+                This page walks through what was said, how it changed over time, and lets you look at the data country by country.
+            </p>
+            <div class="hero-stats">
+                <div class="hero-stat"><strong>7,507</strong><span>speeches</span></div>
+                <div class="hero-stat"><strong>199</strong><span>countries</span></div>
+                <div class="hero-stat"><strong>46</strong><span>years</span></div>
+                <div class="hero-stat"><strong>~20M</strong><span>words</span></div>
+            </div>
+            <p class="hero-scroll">Scroll to begin ↓</p>
+        </div>
+    </header>
+
+    <main class="story-main">
+
+        <!-- ============================================================
+             Chapter 1 — The setting
+             ============================================================ -->
+        <section class="story reveal">
+            <div class="story-narrow">
+                <p class="story-eyebrow">Chapter 1 · What is this data?</p>
+                <h2>What is the General Debate?</h2>
+                <p>
+                    Once a year, in late September, the United Nations holds a week-long event called the General Debate.
+                    The rules are simple: each member country sends one person (usually a president, a prime minister, or a foreign minister)
+                    to give a speech in front of the General Assembly. There is no actual debate in the usual sense.
+                    Each country gets its turn, says what it wants to say, and sits back down.
+                </p>
+                <p>
+                    Since 1970 that adds up to about <strong>7,500 speeches</strong>. They cover wars, climate, trade, human rights,
+                    development, and pretty much every issue you can think of. They are public records, but very few
+                    people actually read them. Each speech is around 3,000 words on average, and they pile up fast.
+                </p>
+                <p>
+                    This page goes through that pile in five short chapters. We start with the basic numbers: how many speeches there
+                    are, who gave them, and how long they are. Then we look at the words themselves: which ones come up most often,
+                    and how the topics have changed since the 1970s. At the end, you can open the world map and look at the data
+                    for any country.
+                </p>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             Chapter 2 — The scale
+             ============================================================ -->
+        <section class="story reveal">
+            <div class="story-narrow">
+                <p class="story-eyebrow">Chapter 2 · How many speeches</p>
+                <h2>How many speeches, and from how many countries?</h2>
+                <p>
+                    From 1970 to 2015 the General Debate collected <strong>7,507 speeches</strong> among
+                    <strong>199 countries</strong>. The number of speeches grew steadily over time. In 1970, only
+                    about 70 countries showed up. By 2015 nearly 200 did.
+                </p>
+                <p>
+                    Two periods explain most of the growth. The 1970s saw a wave of new arrivals as former colonies
+                    in Africa, Asia and the Caribbean became independent. The early 1990s saw another jump, when
+                    the Soviet Union split into 15 new states and Yugoslavia into several more. After that, growth
+                    slowed down. The chart below shows one bar per year.
+                </p>
+                <div class="story-chart-wrap">
+                    <div id="chart-speeches" class="chart"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             Chapter 3 — The vocabulary
+             ============================================================ -->
+        <section class="story reveal">
+            <div class="story-narrow">
+                <p class="story-eyebrow">Chapter 3 · The most common words</p>
+                <h2>What words come up the most?</h2>
+                <p>
+                    If you take out short common words like <em>the</em>, <em>and</em>, <em>is</em>, and count what's
+                    left, the same handful of words show up over and over again:
+                    <strong>peace, development, security, economic, human, rights</strong>. Every country uses them.
+                    At first glance, every speech sounds about the same.
+                </p>
+                <p>
+                    That's part of the problem with reading UN speeches in bulk: the big themes are universal. The
+                    real differences only show up when you ask harder questions, for example <em>which</em> kind of peace,
+                    <em>whose</em> security, <em>about which</em> countries. We'll come back to that in later chapters.
+                    For now, here are the 15 most-used content words across all 46 years.
+                </p>
+                <div class="story-chart-wrap">
+                    <div id="chart-words" class="chart"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             Chapter 4 — Trends
+             ============================================================ -->
+        <section class="story reveal">
+            <div class="story-narrow">
+                <p class="story-eyebrow">Chapter 4 · How topics changed</p>
+                <h2>What changed over the years?</h2>
+                <p>
+                    Speeches don't talk about the same things forever. Some topics fade out, others arrive suddenly,
+                    and a few stay on the agenda the whole time. A handful of keywords is enough to see the pattern.
+                </p>
+                <p>
+                    During the 1970s and 1980s, <strong>nuclear weapons</strong> came up constantly. The Cold War made
+                    disarmament a permanent topic. After the Soviet Union dissolved in 1991, nuclear mentions dropped
+                    sharply, and <strong>democracy</strong> rose in its place. After the September 11 attacks in 2001,
+                    <strong>terror</strong> jumped from almost nothing to one of the most-mentioned words for years.
+                    <strong>Climate</strong> only became a regular topic after 2007, around the time the UN started
+                    running yearly climate summits.
+                </p>
+                <div class="story-chart-wrap">
+                    <div id="chart-keywords" class="chart"></div>
+                </div>
+                <p style="margin-top:1.4rem; font-size:0.92rem">
+                    The white dots along the bottom mark key geopolitical events — hover one to see what it was.
+                    The numbers on the y-axis are <em>mentions per 1,000 words</em>, not raw counts, so a country
+                    that wrote a short focused speech about climate scores higher here than a country that wrote
+                    a long speech about everything.
+                </p>
+
+                <aside class="story-observations">
+                    <h3>What we noticed in the numbers</h3>
+                    <div class="obs-list">
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">1</span><span class="obs-tag">2001 · Terror</span></div>
+                            <p>Pre-2001, "terror" averaged <b>0.39</b> mentions per 1,000 words across every year of speeches. In 2001 — held days after the September attacks — it hit <b>6.31</b>. That's <b>16×</b> the entire pre-9/11 average. The next-biggest spike before then was 1998 (US embassy bombings in Africa) at just 1.39.</p>
+                        </article>
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">2</span><span class="obs-tag">1996 · Nuclear's real peak</span></div>
+                            <p>You'd expect the Cold War to be peak nuclear, but the all-time high is actually <b>1996 at 2.02</b> — the year the UN finalised the Comprehensive Nuclear-Test-Ban Treaty. The Cold War kept nuclear constantly loud (1.0–1.7 every year from 1975 to 1986), but the single biggest year came after the wall fell.</p>
+                        </article>
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">3</span><span class="obs-tag">2007 · Climate arrived in one year</span></div>
+                            <p>Before 2007, climate averaged <b>0.20</b> mentions per 1,000 words — a footnote. In 2007 it jumped <b>12×</b> to 2.34, the year of the IPCC's Fourth Assessment Report and the Bali roadmap. It peaked again in 2009 (Copenhagen prep) at 2.40, and has never fallen back to its pre-2007 baseline. Climate became a permanent agenda item, not a fad.</p>
+                        </article>
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">4</span><span class="obs-tag">Topics trade places</span></div>
+                            <p>In 2001, with terror at 6.31, nuclear fell to its lowest point in the dataset (<b>0.39</b>). When one global emergency took the stage, the previous one nearly vanished. We see the same pattern when the financial crisis arrives: economic mentions jump from <b>1.82 in 2008 to 3.05 in 2009</b> while almost every other topic dips.</p>
+                        </article>
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">5</span><span class="obs-tag">1991 · Democracy's loudest year</span></div>
+                            <p>Democracy hit <b>1.10</b> mentions per 1,000 words in 1991 — its all-time peak. The new states that had just emerged from the Soviet bloc spent their first UN speeches asserting their democratic credentials. The rate has slowly drifted downward ever since.</p>
+                        </article>
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">6</span><span class="obs-tag">2015 · Refugee crisis</span></div>
+                            <p>Refugee mentions sat at an average of <b>0.24</b> per 1,000 words across 1990–2014. In 2015, with over a million Syrians and others arriving in Europe, it leapt to <b>0.77</b> — three times its long-term average and the highest of any year in the dataset.</p>
+                        </article>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             Chapter 5 — Topic map (year slider + theme dropdown)
+             ============================================================ -->
+        <section class="story story-topic-map reveal">
+            <div class="story-narrow" style="margin-bottom: 1.6rem;">
+                <p class="story-eyebrow">Chapter 5 · The topic map</p>
+                <h2>Where in the world is each topic talked about?</h2>
+                <p>
+                    The global trends in the previous chapter hide a lot. When the chart says "climate is rising",
+                    it doesn't tell you <em>whose</em> climate — whether small island states are screaming about
+                    rising seas while big polluters stay quiet, or the other way around. To see that, you need to
+                    put the topic on a map.
+                </p>
+                <p>
+                    Pick a topic from the dropdown. Drag the year slider, or hit <strong>play</strong> to scrub
+                    through all 46 years automatically. Each country is colored by how often it mentioned the
+                    topic's keywords in that year's speech, normalised per 1,000 words. Grey countries didn't
+                    speak that year. Hover for the exact rate.
+                </p>
+                <p style="font-size:0.92rem">
+                    The color scale is fixed per topic — so the deepest red always means the highest rate that
+                    topic ever reached, across all years. That lets you compare years honestly: a country lighting
+                    up in 2009 really did mention climate more than the same country in 1990.
+                </p>
+            </div>
+
+            <div class="topic-controls">
+                <div class="topic-control-group">
+                    <label for="tm-topic">Topic</label>
+                    <select id="tm-topic"></select>
+                </div>
+                <div class="topic-control-group topic-control-slider">
+                    <label for="tm-year-slider">Year</label>
+                    <input type="range" id="tm-year-slider" min="1970" max="2015" value="2015">
+                    <span id="tm-year-label">2015</span>
+                </div>
+                <button id="tm-play" class="topic-play" type="button" aria-label="Play through years">▶ Play</button>
+            </div>
+
+            <div class="topic-map-shell">
+                <svg id="tm-svg" role="img" aria-label="World map colored by topic mention rate"></svg>
+                <div id="tm-tooltip" class="tooltip" hidden></div>
+                <div id="tm-legend" class="legend topic-legend"></div>
+                <div id="tm-keywords" class="topic-keywords"></div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             Chapter 6 — Explore (interactive world map, basic metrics)
+             ============================================================ -->
+        <section class="story story-explore reveal">
+            <div class="story-narrow" style="margin-bottom: 2rem;">
+                <p class="story-eyebrow">Chapter 6 · Explore the data</p>
+                <h2>Pick a country, pick a metric</h2>
+                <p>
+                    This is the world map for free exploration. Each country is colored by the metric you pick in
+                    the dropdown — average words per speech, number of speeches, average sentences, or average
+                    number of unique words used. Hover over a country to see a quick summary. Click on it to open
+                    a panel with full details, including the years it gave speeches and the words it used most.
+                </p>
+                <p>
+                    The magnifier lens helps with small countries that are otherwise hard to click. Turn it off
+                    in the control above if you find it distracting.
+                </p>
+            </div>
+            <div class="explore-controls">
+                <label for="m2-metric">Color by</label>
+                <select id="m2-metric"></select>
+                <label class="explore-toggle">
+                    <input type="checkbox" id="m2-magnifier" checked>
+                    <span>Magnifier lens</span>
+                </label>
+            </div>
+            <div class="explore-shell map2-container map2">
+                <svg id="m2-svg" role="img" aria-label="World map"></svg>
+                <div id="m2-tooltip" class="tooltip" hidden></div>
+                <aside id="m2-panel" class="panel floating-panel" hidden>
+                    <button class="panel-close" aria-label="Close">×</button>
+                    <div class="panel-body"></div>
+                </aside>
+                <div id="m2-legend" class="legend"></div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             Coming next — features under construction
+             ============================================================ -->
+        <section class="upcoming reveal">
+            <h2>Still under construction</h2>
+            <p class="upcoming-sub">The pieces below are next on the build list for Milestone 3.</p>
+            <div class="upcoming-grid">
+                <article class="upcoming-card">
+                    <span class="tag">Scatter · animated</span>
+                    <h3>Diplomatic blocs</h3>
+                    <p>Countries that talk alike, plotted in 2D from TF-IDF embeddings.
+                       Play decade by decade and watch the Cold War split collapse, the G77 stay tight.</p>
+                </article>
+                <article class="upcoming-card">
+                    <span class="tag">Directed graph</span>
+                    <h3>Who talks about whom</h3>
+                    <p>Every speech is full of country names. Counting them produces a network of diplomatic
+                       attention — who watches whom, who never names anyone.</p>
+                </article>
+                <article class="upcoming-card">
+                    <span class="tag">Per country</span>
+                    <h3>Distinctive vocabulary</h3>
+                    <p>The words a country uses far more than average. France says <em>francophonie</em>;
+                       small island states say <em>rising</em>; Cuba says <em>blockade</em>.</p>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="final-footer">
+        <p>VizKids · COM-480 Data Visualization · EPFL · Bochatay · Foletti · Ranieri</p>
+        <p style="margin-top:0.4rem">
+            Data: <a href="https://www.kaggle.com/datasets/unitednations/un-general-debates" target="_blank" rel="noreferrer">UN General Debates corpus</a>
+            ·
+            <a href="index.html">Back to Milestone 2</a>
+        </p>
+    </footer>
+
+    <!-- ============================================================
+         Speech Reader drawer — slides in from the right when a country
+         is clicked on the topic map (Chapter 5).
+         ============================================================ -->
+    <aside id="speech-reader" class="speech-reader" hidden>
+        <div class="sr-backdrop"></div>
+        <div class="sr-panel">
+            <header class="sr-header">
+                <div class="sr-titles">
+                    <h3 class="sr-country">Country</h3>
+                    <span class="sr-iso">ISO</span>
+                </div>
+                <button class="sr-close" type="button" aria-label="Close speech reader">×</button>
+            </header>
+            <div class="sr-meta">
+                <label class="sr-meta-group">
+                    <span class="sr-meta-label">Year</span>
+                    <select class="sr-year-select"></select>
+                </label>
+                <span class="sr-wordcount"></span>
+                <span class="sr-meta-spacer"></span>
+                <span class="sr-meta-group">
+                    <span class="sr-meta-label">Highlighting</span>
+                    <span class="sr-topic"></span>
+                </span>
+            </div>
+            <div class="sr-body" tabindex="0">
+                <p class="sr-loading">Click a country on the map to read its speech.</p>
+            </div>
+        </div>
+    </aside>
+
+    <script type="module" src="js/final.js"></script>
+</body>
+</html>

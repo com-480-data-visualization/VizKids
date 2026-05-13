@@ -5,7 +5,7 @@ import { chartTooltip } from './tooltip.js';
 export function render(container, data) {
     const el = typeof container === 'string' ? document.querySelector(container) : container;
     const width = el.clientWidth || 480;
-    const height = 260;
+    const height = 360;
     const iw = width - MARGIN.left - MARGIN.right;
     const ih = height - MARGIN.top - MARGIN.bottom;
 

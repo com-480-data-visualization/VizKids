@@ -1,0 +1,56 @@
+{
+    "meta": {
+        "description": "Curated geopolitical events. Each event is annotated on the keyword-trends chart at its year. Kept short — ~8 events to avoid clutter.",
+        "source": "Editorial pick by VizKids"
+    },
+    "events": [
+        {
+            "year": 1989,
+            "label": "Berlin Wall falls",
+            "description": "End of the European Communist bloc; the Cold War vocabulary starts collapsing.",
+            "related": ["nuclear", "democracy"]
+        },
+        {
+            "year": 1991,
+            "label": "USSR dissolved",
+            "description": "Soviet Union breaks into 15 states; UN membership jumps and Cold War language disappears from speeches.",
+            "related": ["nuclear", "democracy"]
+        },
+        {
+            "year": 1994,
+            "label": "Rwandan genocide",
+            "description": "An estimated 800,000 people killed in 100 days. Refugee and conflict language rise in the following years.",
+            "related": ["refugee", "peace"]
+        },
+        {
+            "year": 2001,
+            "label": "September 11 attacks",
+            "description": "Coordinated attacks in the United States; 'terror' goes from background noise to one of the most-mentioned words for years.",
+            "related": ["terror"]
+        },
+        {
+            "year": 2007,
+            "label": "IPCC 4th report · Bali",
+            "description": "The IPCC's Fourth Assessment and the Bali Roadmap put climate firmly on the UN agenda. 'Climate' rates surge.",
+            "related": ["climate"]
+        },
+        {
+            "year": 2008,
+            "label": "Global financial crisis",
+            "description": "Collapse of major banks triggers a worldwide recession; economic language returns to the spotlight in 2009.",
+            "related": ["economic", "poverty"]
+        },
+        {
+            "year": 2011,
+            "label": "Arab Spring",
+            "description": "Uprisings across the Arab world; conflicts in Libya, Syria and Yemen reshape terror, refugee and democracy talk.",
+            "related": ["terror", "democracy", "refugee"]
+        },
+        {
+            "year": 2015,
+            "label": "Paris Accord · refugee crisis",
+            "description": "Historic climate agreement and a peak European refugee crisis; both topics dominate the 2015 speeches.",
+            "related": ["climate", "refugee"]
+        }
+    ]
+}

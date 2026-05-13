@@ -33,6 +33,48 @@ body {
 }
 
 /* ============================================================================
+   M3 promo banner (only on the M2 index page)
+   ============================================================================ */
+.m3-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(90deg,
+        rgba(255, 183, 3, 0.10),
+        rgba(239, 71, 111, 0.10),
+        rgba(131, 56, 236, 0.10));
+    border-bottom: 1px solid rgba(255, 183, 3, 0.22);
+    font-size: 0.82rem;
+}
+.m3-banner-label {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.68rem;
+    color: var(--accent);
+    border: 1px solid rgba(255, 183, 3, 0.3);
+    padding: 0.18rem 0.5rem;
+    border-radius: 4px;
+}
+.m3-banner-text { color: var(--muted); }
+.m3-banner-btn {
+    color: var(--ink);
+    text-decoration: none;
+    background: var(--accent);
+    color: var(--bg);
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: transform 150ms ease, box-shadow 150ms ease;
+}
+.m3-banner-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(255, 183, 3, 0.35);
+}
+
+/* ============================================================================
    Header
    ============================================================================ */
 header {

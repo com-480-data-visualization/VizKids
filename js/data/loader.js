@@ -3,6 +3,8 @@ const WORLD_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.jso
 const ISO_MAP_URL = 'data/iso-numeric-to-alpha3.json';
 const STATS_URL = 'data/country_stats.json';
 const GLOBAL_STATS_URL = 'data/global_stats.json';
+const TOPIC_RATES_URL = 'data/topic_rates.json';
+const EVENTS_URL = 'data/events.json';
 
 export async function loadWorld() {
     const [topology, isoMap] = await Promise.all([
@@ -34,6 +36,21 @@ export async function loadStats() {
 
 export async function loadGlobalStats() {
     return fetchJSON(GLOBAL_STATS_URL);
+}
+
+export async function loadTopicRates() {
+    return fetchJSON(TOPIC_RATES_URL);
+}
+
+export async function loadEvents() {
+    try {
+        const obj = await fetchJSON(EVENTS_URL);
+        // Accept either the full {meta, events} shape or a raw array.
+        return Array.isArray(obj) ? obj : (obj.events || []);
+    } catch (e) {
+        console.warn('events.json missing, skipping annotations');
+        return [];
+    }
 }
 
 async function fetchJSON(url) {
