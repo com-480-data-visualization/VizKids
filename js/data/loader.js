@@ -5,6 +5,9 @@ const STATS_URL = 'data/country_stats.json';
 const GLOBAL_STATS_URL = 'data/global_stats.json';
 const TOPIC_RATES_URL = 'data/topic_rates.json';
 const EVENTS_URL = 'data/events.json';
+const BLOCS_URL = 'data/blocs.json';
+const MENTIONS_URL = 'data/mentions.json';
+const DISTINCTIVE_URL = 'data/distinctive.json';
 
 export async function loadWorld() {
     const [topology, isoMap] = await Promise.all([
@@ -51,6 +54,18 @@ export async function loadEvents() {
         console.warn('events.json missing, skipping annotations');
         return [];
     }
+}
+
+export async function loadBlocs() {
+    return fetchJSON(BLOCS_URL);
+}
+
+export async function loadMentions() {
+    return fetchJSON(MENTIONS_URL);
+}
+
+export async function loadDistinctive() {
+    return fetchJSON(DISTINCTIVE_URL);
 }
 
 async function fetchJSON(url) {

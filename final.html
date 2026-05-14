@@ -217,14 +217,238 @@
                 <div id="tm-legend" class="legend topic-legend"></div>
                 <div id="tm-keywords" class="topic-keywords"></div>
             </div>
+
+            <div class="story-narrow" style="margin-top: 2rem;">
+                <aside class="story-observations">
+                    <h3>Things to try on this map</h3>
+                    <div class="obs-list">
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">1</span><span class="obs-tag">Terrorism · 2001</span></div>
+                            <p>Hover the brightest reds: <b>Turkey (22.97)</b>, <b>Saudi Arabia (22.28)</b>, <b>Russia (22.09)</b>. Each had its own jihadist crisis that year — Turkey's PKK and Islamist confrontations, the Saudi monarchy trying to distance itself from al-Qaeda, Russia mid-Chechen war. The United States is fourth at 17.01 — high, but not the highest.</p>
+                        </article>
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">2</span><span class="obs-tag">Climate · 2009</span></div>
+                            <p>The brightest spots are not the big polluters. They are <b>Tuvalu (15.4)</b>, <b>Kiribati (14.0)</b>, <b>Tonga (13.3)</b>, <b>Seychelles (15.5)</b>, plus Guyana, Suriname, Cambodia. The Pacific and Indian Ocean small island states — the ones literally going underwater — took the loudest stand at Copenhagen.</p>
+                        </article>
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">3</span><span class="obs-tag">Migration · 2014 → 2015</span></div>
+                            <p>Slide one year. In 1980 the top voices on migration were Australia, Papua New Guinea, Somalia and Sudan — countries shaped by post-colonial displacement. In 2015, with the Syrian war driving over a million people into Europe, the top eight are all European: <b>Hungary (17.5)</b>, the EU itself (13.6), Austria, Switzerland, Luxembourg, France, Malta, Estonia. Migration flipped from a Southern issue to a European one in 35 years.</p>
+                        </article>
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">4</span><span class="obs-tag">Cold War vocabulary · slide 1975 → 1995</span></div>
+                            <p>Watch entire blocs fade. Cuba sits at <b>6.8</b> in 1975 (imperialism, capitalism, soviet) and drops to <b>0.0</b> by 1995. East Germany is at 5.7 in 1975 then simply disappears (no more speeches after 1989). The US runs the opposite way: <b>1.7 in 1975, peaking at 6.9 in 1985</b> at the height of Reagan-era rhetoric, then back down to 0.89 by 1995. By the year 2000, almost nobody in the Assembly is using these words.</p>
+                        </article>
+                    </div>
+                </aside>
+            </div>
         </section>
 
         <!-- ============================================================
-             Chapter 6 — Explore (interactive world map, basic metrics)
+             Chapter 6 — Diplomatic blocs (animated 2D embedding)
+             ============================================================ -->
+        <section class="story story-blocs reveal">
+            <div class="story-narrow" style="margin-bottom: 1.6rem;">
+                <p class="story-eyebrow">Chapter 6 · Diplomatic blocs</p>
+                <h2>Who talks like whom?</h2>
+                <p>
+                    Topics tell us <em>what</em> was said. Blocs ask a harder question — <em>who said it
+                    the same way</em>. We took every country's speeches in each decade, treated them as one
+                    big document, and used a standard text-similarity technique (TF-IDF, then t-SNE) to put
+                    each country on a 2D map.
+                </p>
+                <p>
+                    Two dots near each other means those two countries used a similar vocabulary that decade.
+                    Two dots far apart means they spoke about different things, or used different words about
+                    the same things. <strong>The axes themselves don't mean anything specific</strong> — only
+                    distances do.
+                </p>
+                <p>
+                    Pick a decade. Hit play to watch the map shuffle as the world's diplomatic vocabulary
+                    shifts. Hover any dot for the country and decade; click to read one of its actual speeches.
+                </p>
+            </div>
+
+            <div class="blocs-controls">
+                <div class="blocs-decade-buttons" id="blocs-decade-buttons"></div>
+                <button id="blocs-play" class="topic-play" type="button" aria-label="Play decades">▶ Play</button>
+                <div class="blocs-legend" id="blocs-legend"></div>
+            </div>
+
+            <div class="blocs-shell">
+                <svg id="blocs-svg" role="img" aria-label="Country similarity scatter, animated by decade"></svg>
+            </div>
+
+            <div class="story-narrow" style="margin-top: 2rem;">
+                <aside class="story-observations">
+                    <h3>What the map shows</h3>
+                    <div class="obs-list">
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">1</span><span class="obs-tag">USA ↔ Cuba</span></div>
+                            <p>In the 1970s, the two were already on opposite sides, but the gap was modest (distance <b>0.60</b> on the normalised map). It widened steadily: <b>0.72</b> in the 80s, <b>0.83</b> in the 90s, <b>1.45</b> in the 2000s. By the 2010s the two countries are talking about almost completely different worlds.</p>
+                        </article>
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">2</span><span class="obs-tag">France ↔ United Kingdom</span></div>
+                            <p>For three decades — 1970s, 80s, 90s — France and the UK are practically on top of each other on the map (distance ≈ <b>0.08</b>). They were the prototypical aligned Western powers. From the 2000s onward the gap jumps almost ten-fold to <b>0.72</b>; the war on terror and Iraq split their diplomatic language for the first time.</p>
+                        </article>
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">3</span><span class="obs-tag">African Group</span></div>
+                            <p>The green dots form one of the tightest clusters in every decade. Despite huge differences in size and politics, the post-independence African states have spoken in a recognisably common voice at the UN — focused on development, decolonisation and sovereignty — for the entire 46-year window.</p>
+                        </article>
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">4</span><span class="obs-tag">The 1990s shake-up</span></div>
+                            <p>Compare 1980s and 1990s. The Eastern bloc — present in the 80s — fragments visibly in the 90s as new states emerge (their first speeches sound more like Western Europe than like the old USSR). The biggest spatial reshuffle in the whole series happens at this transition.</p>
+                        </article>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             Chapter 7 — Who talks about whom (directed mention graph)
+             ============================================================ -->
+        <section class="story story-mentions reveal">
+            <div class="story-narrow" style="margin-bottom: 1.6rem;">
+                <p class="story-eyebrow">Chapter 7 · Who talks about whom</p>
+                <h2>Whose name comes up in whose speeches?</h2>
+                <p>
+                    Every speech is full of country names. We counted them. For each country, we know how many
+                    times it named every other country across the 46 years — <strong>160,662 mentions</strong> in
+                    total, threaded across the entire UN General Debate.
+                </p>
+                <p>
+                    Click any country on the map below. <strong>Amber lines</strong> shoot from that country to
+                    the 15 countries it talked about most. Thicker arcs mean more mentions. Switch between
+                    "all years" and a single year using the toggle.
+                </p>
+            </div>
+
+            <div class="mentions-controls">
+                <div class="mentions-mode" id="mentions-mode-buttons">
+                    <button data-mode="aggregate" class="is-active" type="button">All years</button>
+                    <button data-mode="year" type="button">One year</button>
+                </div>
+                <div class="mentions-year-group" id="mentions-year-group">
+                    <label for="mentions-year-slider">Year</label>
+                    <input type="range" id="mentions-year-slider" min="1970" max="2015" value="2015">
+                    <span id="mentions-year-label">2015</span>
+                </div>
+                <span class="mentions-hint">Click a country to draw its arcs · click the same country again to clear.</span>
+            </div>
+
+            <div class="mentions-shell">
+                <svg id="mentions-svg" role="img" aria-label="World map with arcs showing who mentions whom"></svg>
+                <div id="mentions-tooltip" class="tooltip" hidden></div>
+                <div id="mentions-panel" class="mentions-panel" hidden>
+                    <button class="mentions-panel-close" type="button" aria-label="Close">×</button>
+                    <header>
+                        <h3 id="mentions-panel-title">Country</h3>
+                        <span id="mentions-panel-sub"></span>
+                    </header>
+                    <ol id="mentions-panel-list" class="mentions-list"></ol>
+                </div>
+            </div>
+
+            <div class="story-narrow" style="margin-top: 2rem;">
+                <aside class="story-observations">
+                    <h3>What the network shows</h3>
+                    <div class="obs-list">
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">1</span><span class="obs-tag">Asymmetric obsession · Cuba ↔ USA</span></div>
+                            <p>Across all 46 years, <b>Cuba mentions the United States 662 times</b>. The United States mentions <b>Cuba only 10 times</b>. Cuba's diplomatic identity at the UN is built around opposing the US; from Washington, Cuba is a footnote.</p>
+                        </article>
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">2</span><span class="obs-tag">Israel's top talking point</span></div>
+                            <p>Israel's most-mentioned country across the whole dataset isn't the United States or any neighbour — it's <b>Iran (262 mentions)</b>, more than its mentions of Egypt (173), Lebanon (164), Syria (129) and Jordan (115) combined. The Iranian threat dominates Israeli diplomacy at the UN.</p>
+                        </article>
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">3</span><span class="obs-tag">The most-talked-about country</span></div>
+                            <p>Counting incoming mentions, <b>the USA (11,331)</b> is unsurprisingly first. But <b>South Africa is a close second (10,661)</b>, ahead of Israel (10,527). For three decades the world's speeches were dominated by apartheid; once Mandela was free, the curve fell hard. Namibia (7,387) is fourth — same apartheid story.</p>
+                        </article>
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">4</span><span class="obs-tag">Russia ↔ USA</span></div>
+                            <p>Russia's all-time top mention is the <b>USA (358)</b>. The USA's all-time top mention is <b>Russia (199)</b>. The Cold War rivalry left a permanent fingerprint on each side's UN vocabulary — even decades after 1991.</p>
+                        </article>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             Chapter 8 — Distinctive vocabulary
+             ============================================================ -->
+        <section class="story story-distinctive reveal">
+            <div class="story-narrow" style="margin-bottom: 1.6rem;">
+                <p class="story-eyebrow">Chapter 8 · Distinctive vocabulary</p>
+                <h2>Every country has its own dictionary</h2>
+                <p>
+                    Globally, every country says <em>peace</em> and <em>development</em>. But every country
+                    also has a private dictionary — words it reaches for far more than the rest of the world.
+                    France talks about <em>francophonie</em>. Cuba talks about <em>Yankee</em>, <em>Fidel</em> and
+                    <em>blockade</em>. Tuvalu talks about <em>atolls</em> and <em>SIDS</em>. The Holy See talks
+                    about <em>the Pope</em>.
+                </p>
+                <p>
+                    We measured this by comparing each word's frequency inside a country's speeches to its frequency
+                    in the global corpus. A ratio of <strong>10</strong> means the word is ten times more common in
+                    that country's mouth than in the world's. We keep words that score at least <strong>2×</strong>,
+                    that appear at least 5 times in the country and 50 times globally — enough to filter OCR noise
+                    while keeping country-specific vocabulary intact.
+                </p>
+                <p>
+                    Pick a country below, or try one of the highlights.
+                </p>
+            </div>
+
+            <div class="dv-controls">
+                <div class="dv-control-group">
+                    <label for="dv-country">Country</label>
+                    <select id="dv-country"></select>
+                </div>
+                <div class="dv-suggestions" id="dv-suggestions">
+                    <span class="dv-suggestion-label">Try:</span>
+                </div>
+            </div>
+
+            <div class="dv-display">
+                <div class="dv-info" id="dv-info">Pick a country above to see its distinctive vocabulary.</div>
+                <div class="dv-cloud" id="dv-cloud"></div>
+            </div>
+
+            <div class="story-narrow" style="margin-top: 2rem;">
+                <aside class="story-observations">
+                    <h3>What the words reveal</h3>
+                    <div class="obs-list">
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">1</span><span class="obs-tag">Cuba's revolutionary vocabulary</span></div>
+                            <p>Cuba's top words are <b>yankee</b> (93× more common than average), <b>fidel</b> (72×), <b>castro</b> (70×), <b>cubans</b> (67×), <b>CIA</b> (52×), <b>Puerto Rico</b> (42×), <b>Allende</b> (43×), <b>Martí</b> (36×). Castro-era anti-imperialist rhetoric is mathematically detectable from speech alone.</p>
+                        </article>
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">2</span><span class="obs-tag">Tuvalu's survival agenda</span></div>
+                            <p>Tuvalu's vocabulary reads like a survival checklist: <b>tuvalu</b> (474× — they have to name themselves a lot), <b>LDC</b> (least developed country, 211×), <b>graduation</b> (LDC graduation status, 108×), <b>SDGs</b>, <b>SIDS</b>, <b>atoll</b>, <b>insurance</b>, <b>remittances</b>, <b>emissions</b>, <b>Kyoto</b>. Almost every word ties back to climate and small-state status.</p>
+                        </article>
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">3</span><span class="obs-tag">Israel vs Palestine — same conflict, different words</span></div>
+                            <p>Israel's distinctive words: <b>hamas, jewish, jews, anti-semitism, rockets, bible, incitement</b>. Palestine's: <b>rabin, siege, redeployment, demolition, strip</b> (Gaza), <b>settlers, aqsa, arafat, mosques</b>. The two countries describe the same physical conflict using almost entirely non-overlapping vocabulary — a vivid example of how language shapes politics.</p>
+                        </article>
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">4</span><span class="obs-tag">North Korea's leader cult</span></div>
+                            <p>Kim Jong (307×), Kim (205×), Sung (149× — for Kim il-Sung), Pyongyang (69×), denuclearization, armistice, peninsula, reunified. The DPRK's UN vocabulary is overwhelmingly about its leadership and the unresolved Korean War.</p>
+                        </article>
+                        <article class="obs">
+                            <div class="obs-head"><span class="obs-num">5</span><span class="obs-tag">The Holy See is unmistakable</span></div>
+                            <p>The Vatican's top words: <b>XVI</b> (Pope Benedict, 164×), <b>Francis</b> (Pope Francis, 119×), <b>pope</b> (112×), <b>holy, believers, catholic, holiness, church, christians</b>. The smallest UN state has the most linguistically distinct fingerprint in the entire dataset — there is genuinely no other country talking like this.</p>
+                        </article>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             Chapter 9 — Explore (interactive world map, basic metrics)
              ============================================================ -->
         <section class="story story-explore reveal">
             <div class="story-narrow" style="margin-bottom: 2rem;">
-                <p class="story-eyebrow">Chapter 6 · Explore the data</p>
+                <p class="story-eyebrow">Chapter 9 · Explore the data</p>
                 <h2>Pick a country, pick a metric</h2>
                 <p>
                     This is the world map for free exploration. Each country is colored by the metric you pick in
@@ -257,31 +481,15 @@
         </section>
 
         <!-- ============================================================
-             Coming next — features under construction
+             Wrap-up
              ============================================================ -->
         <section class="upcoming reveal">
-            <h2>Still under construction</h2>
-            <p class="upcoming-sub">The pieces below are next on the build list for Milestone 3.</p>
-            <div class="upcoming-grid">
-                <article class="upcoming-card">
-                    <span class="tag">Scatter · animated</span>
-                    <h3>Diplomatic blocs</h3>
-                    <p>Countries that talk alike, plotted in 2D from TF-IDF embeddings.
-                       Play decade by decade and watch the Cold War split collapse, the G77 stay tight.</p>
-                </article>
-                <article class="upcoming-card">
-                    <span class="tag">Directed graph</span>
-                    <h3>Who talks about whom</h3>
-                    <p>Every speech is full of country names. Counting them produces a network of diplomatic
-                       attention — who watches whom, who never names anyone.</p>
-                </article>
-                <article class="upcoming-card">
-                    <span class="tag">Per country</span>
-                    <h3>Distinctive vocabulary</h3>
-                    <p>The words a country uses far more than average. France says <em>francophonie</em>;
-                       small island states say <em>rising</em>; Cuba says <em>blockade</em>.</p>
-                </article>
-            </div>
+            <h2>You've reached the end</h2>
+            <p class="upcoming-sub">
+                That's 46 years of UN General Debate speeches — 7,507 of them, around 20 million words —
+                turned into nine views. Scroll back to any chapter to keep exploring, or click any country
+                on the maps to read the actual speeches.
+            </p>
         </section>
 
     </main>

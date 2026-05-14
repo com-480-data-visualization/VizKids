@@ -451,6 +451,456 @@
 }
 
 /* ============================================================================
+   Observations callouts — "What stood out" / "Things to try" blocks under charts
+   ============================================================================ */
+.story-observations {
+    margin-top: 2.5rem;
+    padding: 1.5rem 1.7rem 1.7rem;
+    background: linear-gradient(155deg, var(--surface), rgba(255, 183, 3, 0.04));
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+}
+.story-observations h3 {
+    color: var(--accent);
+    font-size: 0.74rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 1.3rem;
+    font-weight: 700;
+}
+.story-observations .obs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+}
+.story-observations .obs {
+    display: block;
+}
+.story-observations .obs-head {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    margin-bottom: 0.45rem;
+}
+.story-observations .obs-num {
+    display: inline-grid;
+    place-items: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    font-size: 0.78rem;
+    border: 1px solid rgba(255, 183, 3, 0.5);
+    border-radius: 4px;
+    background: rgba(255, 183, 3, 0.06);
+}
+.story-observations .obs-tag {
+    color: var(--accent);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.story-observations .obs p {
+    color: var(--ink);
+    opacity: 0.92;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin: 0;
+    max-width: none;
+}
+.story-observations .obs p b {
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+}
+
+/* ============================================================================
+   Chapter 6 — Diplomatic blocs
+   ============================================================================ */
+.blocs-controls {
+    display: flex;
+    gap: 1.4rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.2rem;
+    padding: 0.9rem 1.2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.blocs-decade-buttons {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+}
+.blocs-decade-buttons button {
+    background: var(--bg);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 0.45rem 0.85rem;
+    border-radius: 6px;
+    font: inherit;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+    transition: all 120ms ease;
+}
+.blocs-decade-buttons button:hover {
+    border-color: var(--accent);
+    color: var(--ink);
+}
+.blocs-decade-buttons button.is-active {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+    box-shadow: 0 4px 14px rgba(255, 183, 3, 0.25);
+}
+
+.blocs-legend {
+    display: flex;
+    gap: 0.9rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-left: auto;
+    font-size: 0.82rem;
+    color: var(--muted);
+}
+.blocs-legend .leg-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.blocs-legend .leg-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4);
+}
+
+.blocs-shell {
+    position: relative;
+    height: 64vh;
+    min-height: 520px;
+    background: radial-gradient(ellipse at center, var(--surface) 0%, var(--bg) 75%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+}
+.blocs-shell svg { width: 100%; height: 100%; display: block; }
+.blocs-shell .bloc-pt {
+    transition: stroke-width 120ms ease, filter 120ms ease;
+}
+.blocs-shell .bloc-pt:hover {
+    stroke: var(--ink);
+    stroke-width: 2;
+    filter: brightness(1.25) drop-shadow(0 0 6px rgba(255, 255, 255, 0.25));
+}
+.blocs-decade-label {
+    fill: rgba(240, 243, 250, 0.10);
+    font-size: 6rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* ============================================================================
+   Chapter 7 — Who talks about whom (mentions map)
+   ============================================================================ */
+.mentions-controls {
+    display: flex;
+    gap: 1.4rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.2rem;
+    padding: 0.9rem 1.2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+.mentions-mode {
+    display: flex;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+}
+.mentions-mode button {
+    background: transparent;
+    color: var(--muted);
+    border: none;
+    padding: 0.45rem 0.9rem;
+    font: inherit;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 120ms ease, color 120ms ease;
+}
+.mentions-mode button:hover { color: var(--ink); }
+.mentions-mode button.is-active {
+    background: var(--accent);
+    color: var(--bg);
+}
+
+.mentions-year-group {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex: 1;
+    min-width: 240px;
+    font-size: 0.82rem;
+    color: var(--muted);
+}
+.mentions-year-group label {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+.mentions-year-group input[type="range"] { flex: 1; accent-color: var(--accent); }
+#mentions-year-label {
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+    font-weight: 700;
+    min-width: 3em;
+    text-align: right;
+}
+.mentions-year-group.is-disabled { opacity: 0.4; pointer-events: none; }
+
+.mentions-hint {
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-style: italic;
+}
+
+.mentions-shell {
+    position: relative;
+    height: 76vh;
+    min-height: 620px;
+    background: radial-gradient(ellipse at top, var(--surface) 0%, var(--bg) 70%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+}
+.mentions-shell svg { width: 100%; height: 100%; display: block; }
+.mentions-shell .country {
+    stroke: var(--bg);
+    stroke-width: 0.4;
+    cursor: pointer;
+    transition: filter 120ms ease, stroke-width 120ms ease;
+}
+.mentions-shell .country:hover { filter: brightness(1.45); stroke: var(--accent); stroke-width: 1; }
+.mentions-shell .country.source {
+    fill: var(--accent) !important;
+    stroke: #fff;
+    stroke-width: 1.4;
+    filter: drop-shadow(0 0 6px rgba(255, 183, 3, 0.55));
+}
+.mentions-shell .country.target {
+    fill: rgba(239, 71, 111, 0.45) !important;
+    stroke: var(--accent-3);
+    stroke-width: 0.8;
+}
+.mentions-shell .graticule { fill: none; stroke: rgba(120, 160, 230, 0.08); stroke-width: 0.4; }
+.mentions-shell .arc { pointer-events: none; }
+.mentions-shell .target-ring { pointer-events: none; }
+
+.mentions-panel {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    width: 320px;
+    max-height: calc(100% - 2.5rem);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+    overflow-y: auto;
+    color: var(--ink);
+    animation: slideUp 220ms ease-out;
+    z-index: 2;
+}
+.mentions-panel header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border-soft);
+}
+.mentions-panel h3 {
+    color: var(--ink);
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+.mentions-panel header span {
+    color: var(--muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}
+.mentions-panel-close {
+    position: absolute;
+    top: 0.4rem;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+}
+.mentions-panel-close:hover { color: var(--accent); background: rgba(255,255,255,0.04); }
+
+.mentions-list {
+    list-style: none;
+    counter-reset: mn;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+.mentions-list li {
+    counter-increment: mn;
+    display: grid;
+    grid-template-columns: 1.6rem 1fr auto;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.2rem 0;
+    font-size: 0.85rem;
+}
+.mentions-list li::before {
+    content: counter(mn);
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.72rem;
+    text-align: right;
+}
+.mentions-list .name { color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mentions-list .count {
+    color: var(--accent);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================================
+   Chapter 8 — Distinctive vocabulary
+   ============================================================================ */
+.dv-controls {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.2rem;
+    padding: 0.9rem 1.2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+.dv-control-group {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+.dv-control-group label {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+.dv-control-group select {
+    background: var(--bg);
+    color: var(--ink);
+    border: 1px solid var(--border);
+    padding: 0.45rem 0.8rem;
+    border-radius: 6px;
+    font: inherit;
+    cursor: pointer;
+    min-width: 220px;
+}
+.dv-control-group select:hover { border-color: var(--accent); }
+
+.dv-suggestions {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+.dv-suggestion-label {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.68rem;
+    color: var(--muted);
+    margin-right: 0.2rem;
+}
+.dv-suggestion {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--border);
+    padding: 0.32rem 0.7rem;
+    border-radius: 999px;
+    font: inherit;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 120ms ease;
+}
+.dv-suggestion:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(255, 183, 3, 0.08);
+}
+
+.dv-display {
+    background: radial-gradient(ellipse at top, var(--surface) 0%, var(--bg) 80%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.6rem 1.8rem 2rem;
+    min-height: 320px;
+}
+.dv-info {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-bottom: 1.3rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--border-soft);
+}
+.dv-info strong { color: var(--ink); font-weight: 700; font-size: 0.95rem; }
+.dv-info-em { color: var(--accent); font-weight: 600; }
+
+.dv-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.9rem;
+    align-items: baseline;
+    line-height: 1.45;
+}
+.dv-cloud .dv-word {
+    color: var(--ink);
+    font-weight: 600;
+    cursor: help;
+    transition: color 120ms ease, transform 120ms ease;
+    padding: 0.05em 0.1em;
+    border-radius: 3px;
+}
+.dv-cloud .dv-word:hover {
+    color: var(--accent);
+    background: rgba(255, 183, 3, 0.12);
+    transform: translateY(-1px);
+}
+.dv-empty { color: var(--muted); font-style: italic; }
+
+/* ============================================================================
    Speech Reader drawer
    ============================================================================ */
 .speech-reader {
